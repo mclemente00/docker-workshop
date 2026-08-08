@@ -27,6 +27,7 @@
 		87AFFBAD609ACD8AF323FE11 /* MicCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8942C7E957CC17626B1394 /* MicCheck.swift */; };
 		921399FBEA82719083521A3C /* ModelRoundTripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08703041FE4A4B93A05A8CA3 /* ModelRoundTripTests.swift */; };
 		9506E6665566C2A09B61B920 /* BookmarkRail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DBF3D0E08E16175114B88 /* BookmarkRail.swift */; };
+		9CD36AA8FE9E225E4941CA9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3748910ECA730A352C0F996A /* Assets.xcassets */; };
 		9CEFF811CC1CC7E15D00E7BF /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B46F955F64783DA4A9136 /* RecordView.swift */; };
 		9FD8A5820D50D04547004B54 /* TranscriptFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B474DDBD1E0EAB3187DB309D /* TranscriptFormatter.swift */; };
 		B28910AE687D1EE7C9516C21 /* TranscriptionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D29982BB65F69A17E848A5E /* TranscriptionState.swift */; };
@@ -95,6 +96,7 @@
 		2F9B46F955F64783DA4A9136 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		3148FD6EEA2EC9EBD0C2B72C /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		353691BA7E44A913778C80DE /* TranscriptFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptFormatterTests.swift; sourceTree = "<group>"; };
+		3748910ECA730A352C0F996A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		393C4E36ACF34C5DF19968F0 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		3E067074FC2C31FEEAC61578 /* TranscriptionStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionStateTests.swift; sourceTree = "<group>"; };
 		4080B04B9E58CEAFC1522617 /* StopRecordingIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopRecordingIntent.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				4F7A22F77EA966E5EC7F7BE1 /* AppSettings.swift */,
+				3748910ECA730A352C0F996A /* Assets.xcassets */,
 				6EE939D758F4E92D7F2AD16F /* Info.plist */,
 				F812575EF6D7D28B16AF3C1F /* MeetingNotes.entitlements */,
 				8746CB170C91245362E136D8 /* MeetingNotesApp.swift */,
@@ -311,6 +314,7 @@
 			buildConfigurationList = E7AE0062FDC8590DE5883F0F /* Build configuration list for PBXNativeTarget "MeetingNotes" */;
 			buildPhases = (
 				50A41AED7D25DDF6A3EC3BCA /* Sources */,
+				5E80CFD3C272047E2AEC27D5 /* Resources */,
 				80994B7D939CC14F619DEF36 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -400,6 +404,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5E80CFD3C272047E2AEC27D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CD36AA8FE9E225E4941CA9C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		50A41AED7D25DDF6A3EC3BCA /* Sources */ = {
