@@ -71,7 +71,10 @@ runs fine in the Simulator or CI.
 3. Start a recording. A 30-second live mic check runs first, confirming words are landing, then
    goes quiet — the actual transcription happens after you stop, not live (see the plan doc for
    why). The first time you transcribe in a given language, the on-device speech model for that
-   language downloads with visible progress.
+   language downloads with visible progress. If there's a calendar event happening right now,
+   you'll also see a "Use '<event title>'" suggestion chip — tap it to adopt that title, or
+   ignore it; it's never applied automatically. First use prompts for calendar access, and
+   everything works fine if you decline.
 4. **Summaries** (in a recording's detail view, "…" menu) additionally require Apple
    Intelligence to be turned on for the device (Settings → Apple Intelligence & Siri — this is a
    separate opt-in from just owning eligible hardware). If it's off, or the device doesn't
@@ -93,12 +96,15 @@ Following the build order in the plan doc:
 6. ✅ Bookmarks (capture during recording, `BookmarkRail` navigation in detail)
 7. ✅ Live Activity extension (`MeetingNotesActivity`) — Lock Screen + Dynamic Island, with a
    working Stop control that signals the app cross-process via Darwin notifications
-8. ⏭️ Calendar titling (`CalendarService`) — **skipped**, not currently needed
+8. ✅ `CalendarService` — EventKit lookup for an event overlapping the recording's start; shown
+   as a dismissible suggestion chip in `RecordView`, never applied automatically
 9. ✅ `SummaryService` — chunked map-reduce summarization via Foundation Models, availability-gated
 10. ✅ Export (`TranscriptFormatter`, plain text/Markdown via `ShareLink`), consent notice,
     Settings, storage management (discard-audio-keep-transcript + automatic retention)
 11. ✅ Unit tests, this README
 12. ⬜ Commit and push — not done automatically; ask explicitly when you want it committed
+
+Also added: a custom app icon (`Assets.xcassets/AppIcon.appiconset`).
 
 ## Known limits
 
@@ -106,6 +112,5 @@ Following the build order in the plan doc:
   separate model and clustering pipeline.
 - No audio import.
 - No iCloud sync — SwiftData + CloudKit would complicate the audio-file story.
-- No calendar-based title suggestions (step 8, skipped for now).
 - Summaries require Apple Intelligence-capable hardware with it enabled; the app is fully usable
   without it.

@@ -16,6 +16,8 @@ struct RecordView: View {
     @State private var bookmarkTimestamps: [TimeInterval] = []
     @State private var liveTranscriptText = ""
     @State private var liveTranscriptionTask: Task<Void, Never>?
+    @State private var calendarSuggestion: CalendarEventSuggestion?
+    @State private var hasAppliedCalendarSuggestion = false
 
     @AppStorage(AppSettingsKey.liveTranscriptionEnabled) private var liveTranscriptionEnabled = false
     @AppStorage(AppSettingsKey.transcriptionLocaleIdentifier) private var transcriptionLocaleIdentifier = Locale.current.identifier
@@ -29,6 +31,10 @@ struct RecordView: View {
 
                 micCheckStatus
                     .frame(minHeight: 20)
+
+                if let calendarSuggestion, !hasAppliedCalendarSuggestion {
+                    calendarSuggestionChip(calendarSuggestion)
+                }
 
                 LevelMeter(level: recorder.currentLevel)
                     .frame(height: 12)
@@ -142,6 +148,38 @@ struct RecordView: View {
         bookmarkTimestamps.append(recorder.elapsedTime)
     }
 
+    private func calendarSuggestionChip(_ suggestion: CalendarEventSuggestion) -> some View {
+        Button {
+            applyCalendarSuggestion(suggestion)
+        } label: {
+            Label("Use \"\(suggestion.title)\"", systemImage: "calendar")
+                .font(.subheadline)
+                .lineLimit(1)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(.thinMaterial, in: Capsule())
+        }
+    }
+
+    private func applyCalendarSuggestion(_ suggestion: CalendarEventSuggestion) {
+        let attendeeSuffix = suggestion.attendeeCount > 0
+            ? " — \(suggestion.attendeeCount) attendee\(suggestion.attendeeCount == 1 ? "" : "s")"
+            : ""
+        currentTitle = suggestion.title + attendeeSuffix
+        hasAppliedCalendarSuggestion = true
+    }
+
+    private func checkForCalendarSuggestion() {
+        Task {
+            if CalendarService.authorizationStatus == .notDetermined {
+                await CalendarService.requestAccess()
+            }
+            if let suggestion = CalendarService.suggestion() {
+                calendarSuggestion = suggestion
+            }
+        }
+    }
+
     private func startLiveTranscriptionPreview() {
         guard liveTranscriptionTask == nil else { return }
         let bufferStream = recorder.liveBufferStream()
@@ -209,6 +247,7 @@ struct RecordView: View {
             currentTitle = title
             liveActivity.onStopRequested = { finishRecording() }
             liveActivity.start(title: title)
+            checkForCalendarSuggestion()
         } catch {
             errorMessage = error.localizedDescription
         }
