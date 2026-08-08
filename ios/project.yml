@@ -1,0 +1,110 @@
+name: MeetingNotes
+options:
+  bundleIdPrefix: dev.mclemente
+  deploymentTarget:
+    iOS: "26.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_PREVIEWS: YES
+
+targets:
+  MeetingNotes:
+    type: application
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: MeetingNotes
+      - path: Shared/MeetingActivityAttributes.swift
+      - path: Shared/DarwinNotification.swift
+    info:
+      path: MeetingNotes/Info.plist
+      properties:
+        CFBundleDisplayName: Meeting Notes
+        UILaunchScreen: {}
+        UIBackgroundModes:
+          - audio
+          - processing
+        BGTaskSchedulerPermittedIdentifiers:
+          - dev.mclemente.MeetingNotes.transcription
+        NSMicrophoneUsageDescription: Meeting Notes records audio so it can be transcribed and played back later.
+        NSSpeechRecognitionUsageDescription: Meeting Notes transcribes recordings on-device using Speech Recognition.
+        NSCalendarsUsageDescription: Meeting Notes can suggest a title from a calendar event happening when you start recording.
+        NSSupportsLiveActivities: true
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    entitlements:
+      path: MeetingNotes/MeetingNotes.entitlements
+      properties: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.mclemente.MeetingNotes
+        PRODUCT_NAME: MeetingNotes
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: NO
+    capabilities:
+      BackgroundModes: true
+    dependencies:
+      - target: MeetingNotesActivity
+        embed: true
+
+  MeetingNotesActivity:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: MeetingNotesActivity
+      - path: Shared/MeetingActivityAttributes.swift
+      - path: Shared/DarwinNotification.swift
+    info:
+      path: MeetingNotesActivity/Info.plist
+      properties:
+        CFBundleDisplayName: Meeting Notes
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.mclemente.MeetingNotes.MeetingNotesActivity
+        PRODUCT_NAME: MeetingNotesActivity
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES
+
+  MeetingNotesTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: MeetingNotesTests
+    dependencies:
+      - target: MeetingNotes
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.mclemente.MeetingNotes.MeetingNotesTests
+        GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  MeetingNotes:
+    build:
+      targets:
+        MeetingNotes: all
+        MeetingNotesTests: [test]
+    test:
+      targets:
+        - MeetingNotesTests
+    run:
+      config: Debug
+    archive:
+      config: Release
