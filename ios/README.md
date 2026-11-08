@@ -83,6 +83,35 @@ runs fine in the Simulator or CI.
    continuous preview during recording, off by default since it costs more battery than the
    default deferred-transcription approach), transcription language, and audio retention.
 
+## Troubleshooting
+
+### "App No Longer Available" when tapping the icon
+
+The build succeeded, the app installed, and tapping it shows *App No Longer Available* (or it
+flashes and closes). **This is an expired provisioning profile, not a code problem.**
+
+Free Apple ID signing issues a profile that lasts **7 days**. On day 8 the app stops launching with
+that message. A paid Apple Developer Program membership gets you a year instead.
+
+**Fix:** connect the device and run from Xcode again (`⌘R`). That re-signs with a fresh profile and
+it launches.
+
+> **Do not delete the app from the home screen to "reinstall clean."**
+>
+> Every recording, transcript, and audio file lives in the app container and is deleted with it —
+> there is no iCloud sync and no backup. Re-running from Xcode installs over the existing app and
+> the library survives. Deleting is unrecoverable.
+
+If re-running doesn't fix it, the signing certificate itself may have been revoked (this happens if
+you've created more than the free tier's limit of app IDs, or removed the account in Xcode). Check
+Xcode → Settings → Accounts → Manage Certificates, and re-pick the team on **both** targets.
+
+### "Requires a development team"
+
+Both `MeetingNotes` and `MeetingNotesActivity` need a signing team set, and the error only ever
+names one of them at a time. See [Signing](#signing) above — and note that running
+`xcodegen generate` wipes both.
+
 ## What's built
 
 Following the build order in the plan doc:
