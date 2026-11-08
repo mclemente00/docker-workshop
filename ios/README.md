@@ -96,6 +96,10 @@ that message. A paid Apple Developer Program membership gets you a year instead.
 **Fix:** connect the device and run from Xcode again (`⌘R`). That re-signs with a fresh profile and
 it launches.
 
+Re-signing also issues a new developer certificate, so the device will likely ask you to trust it
+again: **Settings → General → VPN & Device Management → [your Apple ID] → Trust**. Expect this step
+every time the profile expires, not just on the first install.
+
 > **Do not delete the app from the home screen to "reinstall clean."**
 >
 > Every recording, transcript, and audio file lives in the app container and is deleted with it —
